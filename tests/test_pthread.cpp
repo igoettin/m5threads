@@ -19,12 +19,12 @@
 
 
 
-#include <assert.h>
-#include <pthread.h>
-#include <stdlib.h>
+//#include <assert.h>
+//#include <pthread.h>
+//#include <stdlib.h>
 
 #include <stdio.h>
-
+/*
 void* run1(void* arglist)
 {
     int* args = (int*)arglist;
@@ -109,12 +109,12 @@ void* run4(void* arglist)
     assert(result == 0);
     return NULL;
 }
-
+*/
 int main(int argc, const char** const argv) {
 
     // test 1 : creation & join
     printf("\n1. thread creation and join test\n");
-
+/*
     pthread_t pth;
     pthread_attr_t attr;
     int arg[2];
@@ -196,4 +196,5 @@ int main(int argc, const char** const argv) {
 
     result = pthread_join(pth, NULL);
     assert(result == 0);
+*/
 }

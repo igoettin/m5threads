@@ -42,6 +42,8 @@
   #include "spinlock_sparc.h"
 #elif defined (__arm__)
   #include "spinlock_arm.h"
+#elif defined(__riscv__)
+  #include "spinlock_riscv.h"
 #else
   #error "spinlock routines not available for your arch!\n"
 #endif
@@ -69,7 +71,7 @@
 #define NPTL_TCBHEAD_T_SIZE (sizeof(tcbhead_t))
 
 //Thread control structure
-typedef struct {
+; typedef struct{
   pthread_t tid;
   unsigned int is_detached; //0 if joinable, 1 if detached
   volatile int child_finished;
@@ -190,10 +192,10 @@ static void setup_thread_tls(void* th_block_addr) {
 
   //Note: We don't care about DTV pointers for x86/SPARC -- they're never used in static mode
   /* Initialize the thread pointer.  */
-  #if TLS_DTV_AT_TP
-  TLS_INIT_TP (tlsblock, 0);
-  #elif TLS_TCB_AT_TP
-  TLS_INIT_TP ((char *) tlsblock + tcb_offset, 0);
+  #if TLS_DTV_AT_TP 
+  TLS_INIT_TP (tlsblock, 0); 
+  #elif TLS_TCB_AT_TP 
+  TLS_INIT_TP ((char *) tlsblock + tcb_offset, 0); 
   #else
   #error "TLS_TCB_AT_TP xor TLS_DTV_AT_TP must be defined"
   #endif

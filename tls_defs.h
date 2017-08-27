@@ -131,7 +131,7 @@ typedef union dtv
 typedef struct
 {
   void *tcb;            /* Pointer to the TCB.  Not necessary the
-                           thread descriptor used by libpthread.  */
+                           thread  used by libpthread.  */
   dtv_t *dtv;
   void *self;           /* Pointer to the thread descriptor.  */
   int multiple_threads;
@@ -215,6 +215,25 @@ typedef struct
 
 # define TLS_INIT_TP(descr, secondcall) \
     INTERNAL_SYSCALL_ARM(set_tls, 0, 1, (descr))
+
+#elif defined (__riscv__)
+  
+typedef struct
+{
+  void *dtv;
+  void *private;
+} tcbhead_t;
+
+//Use the thread pointer register.
+register void* __thread_self asm("tp")
+
+#define TLS_INIT_TP(descr,secondcall) \
+  2
+  //({__thread_self = (char*)descr + 0x7000; NULL;})
+
+//# define TLS_INIT_TP(descr, secondcall) \
+  // (__thread_self = (__typeof (__thread_self)) (descr), NULL)
+
 
 #else
   #error "No TLS defs for your architecture"
